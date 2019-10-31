@@ -1,16 +1,18 @@
 cmake_minimum_required(VERSION 3.12)
 
-project(tsl_hat_trie_project)
+set(PROJECT_NAME tsl_hat_trie)
+project(${PROJECT_NAME})
 
-add_library(tsl_hat_trie INTERFACE)
+add_library(${PROJECT_NAME} INTERFACE)
 # Use tsl::hat_trie as target, more consistent with other libraries conventions (Boost, Qt, ...)
 add_library(tsl::hat_trie ALIAS tsl_hat_trie)
 
-target_include_directories(tsl_hat_trie
+target_include_directories(${PROJECT_NAME}
     INTERFACE $<BUILD_INTERFACE:"${CMAKE_CURRENT_SOURCE_DIR}/include">
     )
 
-target_sources(tsl_hat_trie INTERFACE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/tsl/array-hash/array_growth_policy.h>
+target_sources(${PROJECT_NAME} INTERFACE
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/tsl/array-hash/array_growth_policy.h>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/tsl/array-hash/array_hash.h>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/tsl/array-hash/array_map.h>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/tsl/array-hash/array_set.h>
@@ -21,7 +23,7 @@ target_sources(tsl_hat_trie INTERFACE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_D
 
 if (${CMAKE_VERSION} VERSION_GREATER "3.7")
   # Only available since version 3.8
-  target_compile_features(tsl_hat_trie INTERFACE cxx_std_11)
+  target_compile_features(${PROJECT_NAME} INTERFACE cxx_std_11)
 endif ()
 
 
@@ -38,14 +40,18 @@ function(install_target targets config)
       )
 endfunction()
 
-install_target(tsl_hat_trie tsl_hat_trieConfig)
+
+set(CONFIG_NAME "${PROJECT_NAME}Config")
+install_target(${PROJECT_NAME} ${CONFIG_NAME})
 
 install(
     DIRECTORY ${CMAKE_SOURCE_DIR}/include/tsl
     DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
 )
+
+set(CONFIG_DESTINATION_DIR "${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}")
 install(
-    EXPORT tsl_hat_trieConfig
-    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/tsl_hat_trie
+    EXPORT ${CONFIG_NAME}
     NAMESPACE tsl::
+    DESTINATION ${CONFIG_DESTINATION_DIR}
 )
