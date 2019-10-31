@@ -46,6 +46,6 @@ install(
 )
 install(
     EXPORT tsl_hat_trieConfig
-    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake
+    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/tsl_hat_trie
     NAMESPACE tsl::
 )
