@@ -20,12 +20,7 @@ target_sources(${PROJECT_NAME} INTERFACE
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/tsl/htrie_map.h>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/tsl/htrie_set.h>)
 
-
-if (${CMAKE_VERSION} VERSION_GREATER "3.7")
-  # Only available since version 3.8
-  target_compile_features(${PROJECT_NAME} INTERFACE cxx_std_11)
-endif ()
-
+target_compile_features(${PROJECT_NAME} INTERFACE cxx_std_17)
 
 include(GNUInstallDirs)
 
@@ -39,7 +34,6 @@ function(install_target targets config)
       FRAMEWORK DESTINATION ${CMAKE_INSTALL_PREFIX}
       )
 endfunction()
-
 
 set(CONFIG_NAME "${PROJECT_NAME}Config")
 install_target(${PROJECT_NAME} ${CONFIG_NAME})
