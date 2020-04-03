@@ -1,7 +1,10 @@
-cmake_minimum_required(VERSION 3.12)
+cmake_minimum_required(VERSION 2.8)
+cmake_policy(SET CMP0048 NEW)
 
 set(PROJECT_NAME tsl_hat_trie)
+
 project(${PROJECT_NAME})
+#project(${PROJECT_NAME} VERSION 0.0.1 LANGUAGES CXX)
 
 add_library(${PROJECT_NAME} INTERFACE)
 # Use tsl::hat_trie as target, more consistent with other libraries conventions (Boost, Qt, ...)
